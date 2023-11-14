@@ -1,0 +1,51 @@
+metadata:
+  name: megadetector
+  namespace: cvat
+  annotations:
+    name: Megadetector
+    type: detector
+    framework: onnx
+    spec: |
+      [
+        { "id": 0, "name": "animal" },
+        { "id": 1, "name": "person" },
+        { "id": 2, "name": "vehicle" }
+      ]
+spec:
+  description: Megadetector (Yolov5) via onnx-runtime
+  runtime: 'python:3.8'
+  handler: main:handler
+  eventTimeout: 30s
+  build:
+    image: cvat.onnx.megadetector
+    baseImage: ubuntu:22.04
+
+    directives:
+      preCopy:
+        - kind: USER
+          value: root
+        - kind: RUN
+          value: apt update && apt install --no-install-recommends -y wget python3-pip
+        - kind: RUN
+          value: pip install onnxruntime opencv-python-headless pillow pyyaml
+        - kind: WORKDIR
+          value: /opt/nuclio
+        - kind: RUN
+          value: wget https://nsiiaitraindatasa.blob.core.windows.net/nsiitechpublicmodels/megadetector/md_v5b.0.0.onnx
+        - kind: RUN
+          value: ln -s /usr/bin/python3 /usr/bin/python
+
+  triggers:
+    myHttpTrigger:
+      maxWorkers: 2
+      kind: 'http'
+      workerAvailabilityTimeoutMilliseconds: 10000
+      attributes:
+        maxRequestBodySize: 33554432 # 32MB
+
+  platform:
+    attributes:
+      restartPolicy:
+        name: always
+        maximumRetryCount: 3
+      mountMode: volume

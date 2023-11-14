@@ -1,0 +1,104 @@
+metadata:
+  name: onnx-ns-v9
+  namespace: cvat
+  annotations:
+    name: Onnx ViT NS v9
+    type: detector
+    framework: onnx
+    spec: |
+      [
+        {"id": 0, "name": "Aardvark"},
+        {"id": 1, "name": "Aardwolf"},
+        {"id": 2, "name": "Antelope_Roan"},
+        {"id": 3, "name": "Baboon_Unspecified"},
+        {"id": 4, "name": "Badger_Honey"},
+        {"id": 5, "name": "Bird_Unspecified"},
+        {"id": 6, "name": "Blank"},
+        {"id": 7, "name": "Buffalo_Unspecified"},
+        {"id": 8, "name": "Bushbuck"},
+        {"id": 9, "name": "Caracal"},
+        {"id": 10, "name": "Cattle"},
+        {"id": 11, "name": "Cheetah_African"},
+        {"id": 12, "name": "Civet_Unspecified"},
+        {"id": 13, "name": "Dik_Dik"},
+        {"id": 14, "name": "Domestic_Dog"},
+        {"id": 15, "name": "Domestic_Goat"},
+        {"id": 16, "name": "Duiker_Unspecified"},
+        {"id": 17, "name": "Eland"},
+        {"id": 18, "name": "Elephant_African"},
+        {"id": 19, "name": "Fox_Bat_Eared"},
+        {"id": 20, "name": "Gazelle_Grants"},
+        {"id": 21, "name": "Gazelle_Thomsons"},
+        {"id": 22, "name": "Genet_Unspecified"},
+        {"id": 23, "name": "Giraffe"},
+        {"id": 24, "name": "Hare_Unspecified"},
+        {"id": 25, "name": "Hartebeest_Unspecified"},
+        {"id": 26, "name": "Hippopotamus"},
+        {"id": 27, "name": "Human"},
+        {"id": 28, "name": "Hyaena_Brown"},
+        {"id": 29, "name": "Hyaena_Spotted"},
+        {"id": 30, "name": "Impala"},
+        {"id": 31, "name": "Jackal_Unspecified"},
+        {"id": 32, "name": "Kob_Western"},
+        {"id": 33, "name": "Kudu_Greater"},
+        {"id": 34, "name": "Leopard_African"},
+        {"id": 35, "name": "Lion_African"},
+        {"id": 36, "name": "Mongoose_Unspecified"},
+        {"id": 37, "name": "Monkey_Unspecified"},
+        {"id": 38, "name": "Oryx"},
+        {"id": 39, "name": "Ostrich"},
+        {"id": 40, "name": "Porcupine_Unspecified"},
+        {"id": 41, "name": "Rhino_Unspecified"},
+        {"id": 42, "name": "Rodent_Unspecified"},
+        {"id": 43, "name": "Serval"},
+        {"id": 44, "name": "Squirrel_Unspecified"},
+        {"id": 45, "name": "Vehicle"},
+        {"id": 46, "name": "Warthog"},
+        {"id": 47, "name": "Waterbuck"},
+        {"id": 48, "name": "Wild_Dog"},
+        {"id": 49, "name": "Wildcat_African"},
+        {"id": 50, "name": "Wildebeest_Unspecified"},
+        {"id": 51, "name": "Zebra_Unspecified"}
+      ]
+spec:
+  description: Species classifier ViT v9 via onnx-runtime
+  runtime: 'python:3.8'
+  handler: main:handler
+  eventTimeout: 30s
+  build:
+    image: cvat.onnx.ns_model
+    baseImage: ubuntu:22.04
+
+    directives:
+      preCopy:
+        - kind: USER
+          value: root
+        - kind: RUN
+          value: apt update && apt install --no-install-recommends -y wget python3-pip
+        - kind: RUN
+          value: pip install onnxruntime opencv-python-headless pillow pyyaml
+        - kind: WORKDIR
+          value: /opt/nuclio
+        - kind: RUN
+          value: wget https://nsiiaitraindatasa.blob.core.windows.net/nsiitechpublicmodels/model.onnx
+        - kind: RUN
+          value: wget https://nsiiaitraindatasa.blob.core.windows.net/nsiitechpublicmodels/labels.json
+        - kind: RUN
+          value: ln -s /usr/bin/python3 /usr/bin/python
+
+  triggers:
+    myHttpTrigger:
+      maxWorkers: 2
+      kind: 'http'
+      workerAvailabilityTimeoutMilliseconds: 10000
+      attributes:
+        # port: 8080
+        maxRequestBodySize: 33554432 # 32MB
+
+  platform:
+    attributes:
+      restartPolicy:
+        name: always
+        maximumRetryCount: 3
+      mountMode: volume
+      # network: cvat_cvat
