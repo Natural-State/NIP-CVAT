@@ -58,6 +58,8 @@ spec:
           {{- toYaml . | nindent 10 }}
           {{- end }}
           volumeMounts:
+          - name: {{ .Release.Name }}-volume
+            mountPath: /home/django/share
         {{- if not .Values.cvat.backend.disableDistinctCachePerService }}
           - mountPath: /home/django/data/cache
             name: cvat-worker-export-backend-cache
@@ -121,6 +123,9 @@ spec:
       {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
+        - name: {{ .Release.Name }}-volume
+          persistentVolumeClaim:
+            claimName: camera-trap-fileshare-pvc
         {{- if .Values.cvat.backend.defaultStorage.enabled }}
         - name: cvat-backend-data
           persistentVolumeClaim:

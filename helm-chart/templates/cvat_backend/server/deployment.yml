@@ -59,6 +59,8 @@ spec:
             value: {{ .Values.cvat.backend.server.envs.DJANGO_MODWSGI_EXTRA_ARGS}}
           - name: IAM_OPA_BUNDLE
             value: "1"
+          - name: NUCLIO_CONTAINER_BUILDER_KIND
+            value: "kaniko"
           {{ include "cvat.sharedBackendEnv" . | indent 10 }}
           {{- with .Values.cvat.backend.server.additionalEnv }}
           {{- toYaml . | nindent 10 }}
@@ -66,6 +68,8 @@ spec:
           ports:
           - containerPort: 8080
           volumeMounts:
+          - name: {{ .Release.Name }}-volume
+            mountPath: /home/django/share
           {{- if not .Values.cvat.backend.disableDistinctCachePerService }}
           - mountPath: /home/django/data/cache
             name: cvat-server-backend-cache
@@ -126,6 +130,9 @@ spec:
       {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
+        - name: {{ .Release.Name }}-volume
+          persistentVolumeClaim:
+            claimName: camera-trap-fileshare-pvc
         {{- if .Values.cvat.backend.defaultStorage.enabled }}
         - name: cvat-backend-data
           persistentVolumeClaim:
