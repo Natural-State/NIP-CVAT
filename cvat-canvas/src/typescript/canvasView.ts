@@ -108,7 +108,7 @@ export class CanvasViewImpl implements CanvasView, Listener {
                 },
             }),
         );
-    }
+    };
 
     private onError = (exception: unknown, domain?: string): void => {
         this.canvas.dispatchEvent(
@@ -122,7 +122,7 @@ export class CanvasViewImpl implements CanvasView, Listener {
                 },
             }),
         );
-    }
+    };
 
     private stateIsLocked(state: any): boolean {
         const { configuration } = this.controller;
@@ -267,7 +267,7 @@ export class CanvasViewImpl implements CanvasView, Listener {
                 enabled: false,
             });
         }
-    }
+    };
 
     private onDrawDone = (
         data: any | null,
@@ -337,7 +337,7 @@ export class CanvasViewImpl implements CanvasView, Listener {
             // when draw stops from inside canvas (for example if use predefined number of points)
             this.controller.draw({ enabled: false });
         }
-    }
+    };
 
     private onEditStart = (state?: any): void => {
         this.canvas.style.cursor = 'crosshair';
@@ -411,7 +411,7 @@ export class CanvasViewImpl implements CanvasView, Listener {
 
         this.controller.merge({ enabled: false });
         this.mode = Mode.IDLE;
-    }
+    };
 
     private onSplitDone = (object?: any, duration?: number): void => {
         if (object && typeof duration !== 'undefined') {
@@ -437,7 +437,7 @@ export class CanvasViewImpl implements CanvasView, Listener {
 
         this.controller.split({ enabled: false });
         this.mode = Mode.IDLE;
-    }
+    };
 
     private onSelectDone = (objects?: any[], duration?: number): void => {
         if (objects && typeof duration !== 'undefined') {
@@ -503,7 +503,7 @@ export class CanvasViewImpl implements CanvasView, Listener {
         }
 
         this.mode = Mode.IDLE;
-    }
+    };
 
     private onSliceDone = (state?: any, results?: number[][], duration?: number): void => {
         if (state && results && typeof duration !== 'undefined') {
@@ -527,7 +527,7 @@ export class CanvasViewImpl implements CanvasView, Listener {
 
         this.controller.slice({ enabled: false });
         this.mode = Mode.IDLE;
-    }
+    };
 
     private onRegionSelected = (points?: number[]): void => {
         if (points) {
@@ -551,7 +551,7 @@ export class CanvasViewImpl implements CanvasView, Listener {
 
         this.controller.selectRegion(false);
         this.mode = Mode.IDLE;
-    }
+    };
 
     private onFindObject = (e: MouseEvent): void => {
         if (e.button === 0) {
@@ -570,7 +570,7 @@ export class CanvasViewImpl implements CanvasView, Listener {
             this.canvas.dispatchEvent(event);
             e.preventDefault();
         }
-    }
+    };
 
     private onFocusRegion = (x: number, y: number, width: number, height: number): void => {
         // First of all, compute and apply scale
@@ -616,7 +616,7 @@ export class CanvasViewImpl implements CanvasView, Listener {
         this.controller.geometry = dragged;
         this.geometry = dragged;
         this.moveCanvas();
-    }
+    };
 
     private moveCanvas(): void {
         for (const obj of [this.background, this.grid, this.bitmap]) {
@@ -1107,7 +1107,7 @@ export class CanvasViewImpl implements CanvasView, Listener {
     }
 
     private onShiftKeyDown = (e: KeyboardEvent): void => {
-        if (!e.repeat && e.code.toLowerCase().includes('shift')) {
+        if (!e.repeat && (e.code || '').toLowerCase().includes('shift')) {
             this.snapToAngleResize = consts.SNAP_TO_ANGLE_RESIZE_SHIFT;
             if (this.activeElement) {
                 const shape = this.svgShapes[this.activeElement.clientID];
@@ -1126,7 +1126,7 @@ export class CanvasViewImpl implements CanvasView, Listener {
     };
 
     private onShiftKeyUp = (e: KeyboardEvent): void => {
-        if (e.code.toLowerCase().includes('shift') && this.activeElement) {
+        if ((e.code || '').toLowerCase().includes('shift') && this.activeElement) {
             this.snapToAngleResize = consts.SNAP_TO_ANGLE_RESIZE_DEFAULT;
             if (this.activeElement) {
                 const shape = this.svgShapes[this.activeElement.clientID];
@@ -2851,7 +2851,9 @@ export class CanvasViewImpl implements CanvasView, Listener {
 
         return this.adoptedText
             .text((block): void => {
-                block.tspan(`${withLabel ? label.name : ''} ${withID ? clientID : ''} ${withSource ? `(${source})` : ''}`).style({
+                block.tspan(`${withLabel ? label.name : ''} ` +
+                `${withID ? clientID : ''} ` +
+                `${withSource ? `(${source})` : ''}`).style({
                     'text-transform': 'uppercase',
                 });
                 if (withDescriptions) {
@@ -3068,11 +3070,7 @@ export class CanvasViewImpl implements CanvasView, Listener {
 
         const SVGElement = makeSVGFromTemplate(state.label.structure.svg);
 
-        let xtl = Number.MAX_SAFE_INTEGER;
-        let ytl = Number.MAX_SAFE_INTEGER;
-        let xbr = Number.MIN_SAFE_INTEGER;
-        let ybr = Number.MIN_SAFE_INTEGER;
-
+        let [xtl, ytl, xbr, ybr] = [null, null, null, null];
         const svgElements: Record<number, SVG.Element> = {};
         const templateElements = Array.from(SVGElement.children()).filter((el: SVG.Element) => el.type === 'circle');
         for (let i = 0; i < state.elements.length; i++) {
@@ -3082,10 +3080,10 @@ export class CanvasViewImpl implements CanvasView, Listener {
                 const [cx, cy] = this.translateToCanvas(points);
 
                 if (!element.outside) {
-                    xtl = Math.min(xtl, cx);
-                    ytl = Math.min(ytl, cy);
-                    xbr = Math.max(xbr, cx);
-                    ybr = Math.max(ybr, cy);
+                    xtl = xtl === null ? cx : Math.min(xtl, cx);
+                    ytl = ytl === null ? cy : Math.min(ytl, cy);
+                    xbr = xbr === null ? cx : Math.max(xbr, cx);
+                    ybr = ybr === null ? cy : Math.max(ybr, cy);
                 }
 
                 const templateElement = templateElements.find((el: SVG.Circle) => el.attr('data-label-id') === element.label.id);
@@ -3180,6 +3178,13 @@ export class CanvasViewImpl implements CanvasView, Listener {
             }
         }
 
+        // if all elements were outside, set coordinates to zeros
+        xtl = xtl || 0;
+        ytl = ytl || 0;
+        xbr = xbr || 0;
+        ybr = ybr || 0;
+
+        // apply bounding box margin
         xtl -= consts.SKELETON_RECT_MARGIN;
         ytl -= consts.SKELETON_RECT_MARGIN;
         xbr += consts.SKELETON_RECT_MARGIN;
