@@ -1,0 +1,190 @@
+metadata:
+  name: onnx-xprize-ct-species
+  namespace: cvat
+  annotations:
+    name: Onnx ViT XPrize Species Classifier
+    type: detector
+    framework: onnx
+    spec: |
+      [
+        {"id": 0, "name": "psophia leucoptera"},
+        {"id": 1, "name": "leopardus pardalis"},
+        {"id": 2, "name": "mitu tuberosum"},
+        {"id": 3, "name": "geotrygon montana"},
+        {"id": 4, "name": "nasua nasua"},
+        {"id": 5, "name": "pipile cumanensis"},
+        {"id": 6, "name": "dasypus novemcinctus"},
+        {"id": 7, "name": "eira barbara"},
+        {"id": 8, "name": "didelphis marsupialis"},
+        {"id": 9, "name": "penelope jacquacu"},
+        {"id": 10, "name": "leopardus tigrinus"},
+        {"id": 11, "name": "canis familiaris"},
+        {"id": 12, "name": "alectoris rufa"},
+        {"id": 13, "name": "unknown bird"},
+        {"id": 14, "name": "unknown rodent"},
+        {"id": 15, "name": "leptotila rufaxilla"},
+        {"id": 16, "name": "alouatta sara"},
+        {"id": 17, "name": "penelope superciliaris"},
+        {"id": 18, "name": "unknown lizard"},
+        {"id": 19, "name": "cebus apella"},
+        {"id": 20, "name": "atelocynus microtis"},
+        {"id": 21, "name": "ramphastos tucanus"},
+        {"id": 22, "name": "ateles chamek"},
+        {"id": 23, "name": "rupornis magnirostris"},
+        {"id": 24, "name": "cathartes burrovianus"},
+        {"id": 25, "name": "quail"},
+        {"id": 26, "name": "paloma"},
+        {"id": 27, "name": "tayassu pecari"},
+        {"id": 28, "name": "procyon cancrivorus"},
+        {"id": 29, "name": "galictis vittata"},
+        {"id": 30, "name": "unknown marsupial"},
+        {"id": 31, "name": "saimiri boliviensis"},
+        {"id": 32, "name": "falcon"},
+        {"id": 33, "name": "leptotila verreauxi"},
+        {"id": 34, "name": "aramides cajaneus"},
+        {"id": 35, "name": "crypturellus soui"},
+        {"id": 36, "name": "tinamus sp"},
+        {"id": 37, "name": "sapajus apella"},
+        {"id": 38, "name": "cebus albifrons"},
+        {"id": 39, "name": "momotus momota"},
+        {"id": 40, "name": "ortalis guttata"},
+        {"id": 41, "name": "morphnus guianensis"},
+        {"id": 42, "name": "psophia crepitans"},
+        {"id": 43, "name": "mazama gouazoupira"},
+        {"id": 44, "name": "nothocrax urumutum"},
+        {"id": 45, "name": "leptotila sp"},
+        {"id": 46, "name": "dasyprocta fuliginosa"},
+        {"id": 47, "name": "sciurus igniventris"},
+        {"id": 48, "name": "proechimys sp"},
+        {"id": 49, "name": "panthera onca"},
+        {"id": 50, "name": "nasua narica"},
+        {"id": 51, "name": "tamandua mexicana"},
+        {"id": 52, "name": "didelphis sp"},
+        {"id": 53, "name": "penelope purpurascens"},
+        {"id": 54, "name": "myrmecophaga tridactyla"},
+        {"id": 55, "name": "tinamus major"},
+        {"id": 56, "name": "hydrochoerus hydrochaeris"},
+        {"id": 57, "name": "odontophorus gujanensis"},
+        {"id": 58, "name": "unidentifiable"},
+        {"id": 59, "name": "dasyprocta punctata"},
+        {"id": 60, "name": "crypturellus cinereus"},
+        {"id": 61, "name": "unknown squirrel"},
+        {"id": 62, "name": "sylvilagus brasiliensis"},
+        {"id": 63, "name": "dasypus kappleri"},
+        {"id": 64, "name": "priodontes maximus"},
+        {"id": 65, "name": "mazama sp"},
+        {"id": 66, "name": "urocyon cinereoargenteus"},
+        {"id": 67, "name": "meleagris ocellata"},
+        {"id": 68, "name": "crax rubra"},
+        {"id": 69, "name": "agouti paca"},
+        {"id": 70, "name": "tapirus bairdii"},
+        {"id": 71, "name": "procyon lotor"},
+        {"id": 72, "name": "odocoileus virginianus"},
+        {"id": 73, "name": "leptotila plumbeiceps"},
+        {"id": 74, "name": "tamandua tetradactyla"},
+        {"id": 75, "name": "mazama temama"},
+        {"id": 76, "name": "didelphis virginiana"},
+        {"id": 77, "name": "conepatus semistriatus"},
+        {"id": 78, "name": "mazama pandora"},
+        {"id": 79, "name": "ortalis vetula"},
+        {"id": 80, "name": "cuniculus paca"},
+        {"id": 81, "name": "tigrisoma lineatum"},
+        {"id": 82, "name": "cerdocyon thous"},
+        {"id": 83, "name": "puma yagouaroundi"},
+        {"id": 84, "name": "unknown rat"},
+        {"id": 85, "name": "mazama chunyi"},
+        {"id": 86, "name": "cuniculus taczanowskii"},
+        {"id": 87, "name": "didelphis pernigra"},
+        {"id": 88, "name": "unknown coati"},
+        {"id": 89, "name": "tremarctos ornatus"},
+        {"id": 90, "name": "sciurus spadiceus"},
+        {"id": 91, "name": "leopardus wiedii"},
+        {"id": 92, "name": "buteogallus urubitinga"},
+        {"id": 93, "name": "tinamus guttatus"},
+        {"id": 94, "name": "turdus sp"},
+        {"id": 95, "name": "lagidium viscacia"},
+        {"id": 96, "name": "grallaria andicolus"},
+        {"id": 97, "name": "formicarius analis"},
+        {"id": 98, "name": "mustela frenata"},
+        {"id": 99, "name": "hippocamelus antisensis"},
+        {"id": 100, "name": "lycalopex culpaeus"},
+        {"id": 101, "name": "conepatus chinga"},
+        {"id": 102, "name": "equus caballus"},
+        {"id": 103, "name": "vicugna pacos"},
+        {"id": 104, "name": "cinclodes fuscus"},
+        {"id": 105, "name": "cinclodes sp"},
+        {"id": 106, "name": "odontophorus balliviani"},
+        {"id": 107, "name": "peromyscus sp"},
+        {"id": 108, "name": "neochen jubata"},
+        {"id": 109, "name": "unknown raptor"},
+        {"id": 110, "name": "puma yagoroundi"},
+        {"id": 111, "name": "tigrisoma mexicanum"},
+        {"id": 112, "name": "claravis pretiosa"},
+        {"id": 113, "name": "sciurus sp"},
+        {"id": 114, "name": "ave desconocida"},
+        {"id": 115, "name": "aramides cajanea"},
+        {"id": 116, "name": "aramus guarauna"},
+        {"id": 117, "name": "coragyps atratus"},
+        {"id": 118, "name": "unknown mouse or rat"},
+        {"id": 119, "name": "puma concolor"},
+        {"id": 120, "name": "anhima cornuta"},
+        {"id": 121, "name": "mazama gouazoubira"},
+        {"id": 122, "name": "dasyprocta leporina"},
+        {"id": 123, "name": "crax alector"},
+        {"id": 124, "name": "didelphis imperfecta"},
+        {"id": 125, "name": "unknown opossum"},
+        {"id": 126, "name": "mesembrinis cayannensis"},
+        {"id": 127, "name": "myoprocta pratii"},
+        {"id": 128, "name": "unknown armadillo"},
+        {"id": 129, "name": "mazama gouazaoubira"},
+        {"id": 130, "name": "tayassu tajacu"},
+        {"id": 131, "name": "mitu tomentosa"},
+        {"id": 132, "name": "crypturellus variegatus"},
+        {"id": 133, "name": "philander opossum"},
+        {"id": 134, "name": "tupinambis teguixin"},
+        {"id": 135, "name": "tapirus terrestris"},
+        {"id": 136, "name": "bos taurus"},
+        {"id": 137, "name": "canis lupus"},
+        {"id": 138, "name": "unknown"},
+        {"id": 139, "name": "pecari tajacu"},
+        {"id": 140, "name": "mazama americana"},
+        {"id": 141, "name": "equus ferus"}
+      ]
+spec:
+  description: Species classifier ViT XPrize via onnx-runtime
+  runtime: 'python:3.8'
+  handler: main:handler
+  eventTimeout: 30s
+  build:
+    image: cvat.onnx.xprize_ct_model
+    baseImage: ubuntu:22.04
+
+    directives:
+      preCopy:
+        - kind: USER
+          value: root
+        - kind: RUN
+          value: apt update && apt install --no-install-recommends -y wget python3-pip
+        - kind: RUN
+          value: pip install onnxruntime opencv-python-headless pillow pyyaml
+        - kind: WORKDIR
+          value: /opt/nuclio
+        - kind: RUN
+          value: wget https://nsiiaitraindatasa.blob.core.windows.net/nsiitechpublicmodels/xprize_models/ct_species/model.onnx
+        - kind: RUN
+          value: ln -s /usr/bin/python3 /usr/bin/python
+
+  triggers:
+    myHttpTrigger:
+      maxWorkers: 2
+      kind: 'http'
+      workerAvailabilityTimeoutMilliseconds: 10000
+      attributes:
+        maxRequestBodySize: 33554432 # 32MB
+
+  platform:
+    attributes:
+      restartPolicy:
+        name: always
+        maximumRetryCount: 3
+      mountMode: volume
