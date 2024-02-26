@@ -80,9 +80,9 @@ spec:
         - kind: WORKDIR
           value: /opt/nuclio
         - kind: RUN
-          value: wget https://nsiiaitraindatasa.blob.core.windows.net/nsiitechpublicmodels/model.onnx
-        - kind: RUN
-          value: wget https://nsiiaitraindatasa.blob.core.windows.net/nsiitechpublicmodels/labels.json
+          value: wget https://nsiiaitraindatasa.blob.core.windows.net/nsiitechpublicmodels/classification_models/model.onnx
+        # - kind: RUN
+        #   value: wget https://nsiiaitraindatasa.blob.core.windows.net/nsiitechpublicmodels/classification_models/labels.json
         - kind: RUN
           value: ln -s /usr/bin/python3 /usr/bin/python
 
@@ -92,7 +92,6 @@ spec:
       kind: 'http'
       workerAvailabilityTimeoutMilliseconds: 10000
       attributes:
-        # port: 8080
         maxRequestBodySize: 33554432 # 32MB
 
   platform:
@@ -101,4 +100,3 @@ spec:
         name: always
         maximumRetryCount: 3
       mountMode: volume
-      # network: cvat_cvat

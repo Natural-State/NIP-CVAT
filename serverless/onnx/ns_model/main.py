@@ -11,9 +11,15 @@ def init_context(context):
     context.logger.info("Init context...  0%")
 
     # Read labels
-    with open("labels.json", "r") as jsonfile:
-        labels_spec = json.load(jsonfile)
-    labels = {i : labels_spec[i] for i in range(len(labels_spec))}
+    # with open("labels.json", "r") as jsonfile:
+    #     labels_spec = json.load(jsonfile)
+    # labels = {i : labels_spec[i] for i in range(len(labels_spec))}
+    # Read labels
+    with open("/opt/nuclio/function.yaml", 'rb') as function_file:
+        functionconfig = yaml.safe_load(function_file)
+
+    labels_spec = functionconfig['metadata']['annotations']['spec']
+    labels = {item['id']: item['name'] for item in json.loads(labels_spec)}
 
     # Read the DL model
     model = ModelHandler(labels)
